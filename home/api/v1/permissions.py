@@ -16,10 +16,6 @@ class CrowboticsExclusive(BasePermission):
         mac = hmac.new(str(secret).encode("ascii"), digestmod="sha1")
         digest = mac.hexdigest()
 
-        if (
-                not secret or
-                not sha_name == "sha1" or
-                not str(signature) == digest
-        ):
+        if not secret or not sha_name == "sha1" or not str(signature) == digest:
             return False
         return True
