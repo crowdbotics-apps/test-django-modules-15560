@@ -49,11 +49,6 @@ class SignupSerializer(serializers.ModelSerializer):
         user = User(
             email=validated_data.get('email'),
             name=validated_data.get('name'),
-            username=generate_unique_username([
-                validated_data.get('name'),
-                validated_data.get('email'),
-                'user'
-            ])
         )
         user.set_password(validated_data.get('password'))
         user.save()

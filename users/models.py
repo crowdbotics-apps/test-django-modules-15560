@@ -3,6 +3,8 @@ from django.db import models
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 
+from allauth.utils import generate_unique_username
+
 
 TYPE_VENDOR = 'vendor'
 TYPE_CUSTOMER = 'customer'
@@ -23,5 +25,20 @@ class User(AbstractUser):
     user_type =  models.CharField(choices=USER_TYPES, max_length=20,
                     default=TYPE_CUSTOMER)
 
+
+    def save(self, *args, **kwargs):
+        """Custom save to autosave `username` field. """
+        if not self.id:
+            self.username = generate_unique_username([
+                self.name,
+                self.email,
+                self.Meta.verbose_name
+            ])
+        return super(User, self).save(*args, **kwargs)
+
     def get_absolute_url(self):
         return reverse("users:detail", kwargs={"username": self.username})
+
+
+    def _create_user():
+        pass
