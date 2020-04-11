@@ -38,12 +38,6 @@ class SignupSerializer(serializers.ModelSerializer):
             }
         }
 
-    def _get_request(self):
-        request = self.context.get('request')
-        if request and not isinstance(request, HttpRequest) and hasattr(request, '_request'):
-            request = request._request
-        return request
-
     def validate_email(self, email):
         email = get_adapter().clean_email(email)
         if allauth_settings.UNIQUE_EMAIL:
@@ -53,13 +47,14 @@ class SignupSerializer(serializers.ModelSerializer):
         return email
 
     def create(self, validated_data):
+        """Performs the creation of a User during the Signup process."""
         user = User.objects.create_user(
             email=validated_data.get('email'),
-            name=validated_data.get('name'),
+            first_name=validated_data.get('first_name'),
+            last_name=validated_data.get('last_name'),
             password=validated_data.get('password'),
         )
-        request = self._get_request()
-        setup_user_email(request, user, [])
+        setup_user_email(self.context['request'], user, [])
         return user
 
     def save(self, request=None):
