@@ -38,12 +38,13 @@ class UserRegistrationTests(TestCase):
         """Test creating customer user with valid payload is successful."""
         res = self.client.post(SIGNUP_URL, self.DEFAULT_PAYLOAD)
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
-
-        user = get_user_model().objects.get(**res.data)
+        res_data = res.data
+        user = get_user_model().objects.get(**res_data)
         self.assertEqual(user.user_type, User.TYPE_CUSTOMER)
-
-        self.assertTrue(user.check_password(payload['password']))
-        self.assertNotIn('password', res.data)
+        self.assertEqual(user.first_name, res_data['first_name'])
+        self.assertEqual(user.last_name, res_data['last_name'])
+        self.assertTrue(user.check_password(self.DEFAULT_PAYLOAD['password']))
+        self.assertNotIn('password', res_data)
 
     def test_create_valid_vendor_user_success(self):
         """Test creating vendor user with valid payload is successful."""
@@ -53,6 +54,7 @@ class UserRegistrationTests(TestCase):
             'email': 'a@a.com',
             'password': '1234',
             'user_type': 'vendor',
+
         }
         res = self.client.post(SIGNUP_URL, payload)
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
