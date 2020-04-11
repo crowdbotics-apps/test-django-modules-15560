@@ -62,16 +62,16 @@ class SignupSerializer(serializers.ModelSerializer):
         return super().save()
 
 
-class CustomTextSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = CustomText
-        fields = '__all__'
-
-
-class HomePageSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = HomePage
-        fields = '__all__'
+# class CustomTextSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = CustomText
+#         fields = '__all__'
+#
+#
+# class HomePageSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = HomePage
+#         fields = '__all__'
 
 
 class UserSerializer(serializers.ModelSerializer):
