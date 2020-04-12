@@ -59,6 +59,7 @@ THIRD_PARTY_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
     'django_extensions',
+    'djoser',
     'drf_yasg',
 
 ]
@@ -183,7 +184,9 @@ EMAIL_HOST_PASSWORD = env.str("SENDGRID_PASSWORD", "")
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
-
+DJOSER = {
+    'LOGIN_FIELD': ACCOUNT_AUTHENTICATION_METHOD,
+}
 
 if DEBUG:
     # output email to console instead of sending

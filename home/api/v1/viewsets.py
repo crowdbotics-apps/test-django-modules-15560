@@ -4,7 +4,7 @@ from django import apps
 from django.core.management import call_command
 from .permissions import CrowboticsExclusive
 
-from rest_framework import status
+from rest_framework import generics, status
 from rest_framework.authentication import SessionAuthentication, TokenAuthentication
 from rest_framework.authtoken.serializers import AuthTokenSerializer
 from rest_framework.permissions import IsAdminUser
@@ -14,12 +14,18 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from home.api.v1.serializers import (
+    CreateUserSerializer,
     SignupSerializer,
     # CustomTextSerializer,
     # HomePageSerializer,
     UserSerializer,
 )
 from home.models import CustomText, HomePage
+
+
+class CreateUserView(generics.CreateAPIView):
+    """Create a new user in the system"""
+    serializer_class = CreateUserSerializer
 
 
 class SignupViewSet(ModelViewSet):
