@@ -1,3 +1,6 @@
+"""
+Unit tests for User Authentication Signup and Login.
+"""
 from django.test import TestCase
 from django.contrib.auth import get_user_model
 from django.urls import reverse
@@ -13,7 +16,7 @@ from users.models import User
 SIGNUP_URL = reverse('signup-list')
 
 
-class UserRegistrationTests(TestCase):
+class RegistrationTests(TestCase):
     """Test the users registration API"""
 
     DEFAULT_PAYLOAD = {
