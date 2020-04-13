@@ -28,6 +28,11 @@ class UserManager(BaseUserManager):
 
 class User(AbstractUser):
 
+    # Set `email` as the username field and remove it from
+    # Django's default REQUIRED_FIELDS definition.
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []
+
     TYPE_VENDOR = 'vendor'
     TYPE_CUSTOMER = 'customer'
     USER_TYPES = (
@@ -37,6 +42,7 @@ class User(AbstractUser):
     # First Name and Last Name do not cover name patterns
     # around the globe.
     name = models.CharField(_("Name of User"), blank=True, null=True, max_length=255)
+    email = models.EmailField(_('email address'), unique=True)
     address = models.CharField(max_length=200, blank=True)
     phone_number = models.CharField(max_length=20, blank=True)
     business_name = models.CharField(max_length=100, blank=True)
