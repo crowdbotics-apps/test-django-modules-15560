@@ -18,7 +18,6 @@ from rest_framework.views import APIView
 from home.api.v1.serializers import (
     AccommodationSerializer,
     CreateUserSerializer,
-    SignupSerializer,
     # CustomTextSerializer,
     # HomePageSerializer,
     UserSerializer,
@@ -31,13 +30,15 @@ from home.models import (
 
 
 class CreateUserView(generics.CreateAPIView):
-    """Create a new user in the system"""
+    """
+    View for creating a new user.  Users can either be `Customer` or `Vendor`.
+    """
     serializer_class = CreateUserSerializer
 
 
-class SignupViewSet(ModelViewSet):
-    serializer_class = SignupSerializer
-    http_method_names = ["post"]
+class VerifyVendorView(generics.CreateAPIView):
+    """Create a new user in the system"""
+    serializer_class = CreateUserSerializer
 
 
 class LoginViewSet(ViewSet):

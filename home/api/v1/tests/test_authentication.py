@@ -13,7 +13,7 @@ from rest_framework import status
 from users.models import User
 
 
-SIGNUP_URL = reverse('signup')
+SIGNUP_URL = reverse('user-list')
 
 
 class RegistrationTests(TestCase):

@@ -52,34 +52,6 @@ class CreateUserSerializer(UserCreatePasswordRetypeSerializer):
         setup_user_email(self.context['request'], user, [])
         return user
 
-class SignupSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = (
-            'id',
-            'first_name',
-            'last_name',
-            'email',
-            'password',
-            'user_type',
-        )
-        extra_kwargs = {
-            "password": {"write_only": True, "style": {"input_type": "password"}},
-            "email": {"required": True, "allow_blank": False,},
-        }
-
-
-    def create(self, validated_data):
-        """Performs the creation of a User during the Signup process."""
-        user = User.objects.create_user(
-            email=validated_data.get('email'),
-            first_name=validated_data.get('first_name'),
-            last_name=validated_data.get('last_name'),
-            password=validated_data.get('password'),
-        )
-        setup_user_email(self.context['request'], user, [])
-        return user
-
 
 # class CustomTextSerializer(serializers.ModelSerializer):
 #     class Meta:

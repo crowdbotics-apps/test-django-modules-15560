@@ -175,6 +175,9 @@ EMAIL_USE_TLS = True
 
 DJOSER = {
     'LOGIN_FIELD': ACCOUNT_AUTHENTICATION_METHOD,
+    'SERIALIZERS': {
+         'user_create': 'home.api.v1.serializers.CreateUserSerializer',
+    }
 }
 
 if DEBUG:

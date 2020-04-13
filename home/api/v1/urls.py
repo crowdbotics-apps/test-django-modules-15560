@@ -3,8 +3,7 @@ from rest_framework.routers import DefaultRouter
 
 from home.api.v1.viewsets import (
     AccommodationViewSet,
-    CreateUserView,
-    SignupViewSet,
+    # CreateUserView,
     LoginViewSet,
     # HomePageViewSet,
     # CustomTextViewSet,
@@ -18,12 +17,12 @@ router.register('login', LoginViewSet, basename='login')
 router.register("accommodation", AccommodationViewSet)
 
 
-
 urlpatterns = [
-    path('', include('djoser.urls')),
-
     path("", include(router.urls)),
-    path('signup', CreateUserView.as_view(), name='signup'),
+
+    path('auth/', include("djoser.urls.base")),
+    path('auth/', include("djoser.urls.authtoken")),
+    # path('auth/signup', CreateUserView.as_view(), name='signup'),
 
     path("report", AppReportView.as_view(), name="app_report"),
 ]
