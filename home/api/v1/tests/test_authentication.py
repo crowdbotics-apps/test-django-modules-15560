@@ -13,7 +13,7 @@ from rest_framework import status
 from users.models import User
 
 
-SIGNUP_URL = reverse('signup-list')
+SIGNUP_URL = reverse('signup')
 
 
 class RegistrationTests(TestCase):
@@ -23,7 +23,8 @@ class RegistrationTests(TestCase):
         'first_name': 'Aaa',
         'last_name': 'Aaa',
         'email': 'a@a.com',
-        'password': '1234',
+        'password': 'Password0978',
+        're_password': 'Password0978',
     }
 
     def setUp(self):
@@ -55,7 +56,8 @@ class RegistrationTests(TestCase):
             'first_name': 'Aaa',
             'last_name': 'Aaa',
             'email': 'a@a.com',
-            'password': '1234',
+            'password': 'Password0978',
+            're_password': 'Password0978',
             'user_type': 'vendor',
 
         }
