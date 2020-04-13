@@ -15,7 +15,11 @@ from djoser.serializers import (
 
 from rest_framework import serializers
 
-from home.models import CustomText, HomePage
+from home.models import (
+    Accommodation,
+    CustomText,
+    HomePage,
+)
 
 User = get_user_model()
 
@@ -44,25 +48,10 @@ class SignupSerializer(serializers.ModelSerializer):
             'user_type',
         )
         extra_kwargs = {
-            'password': {
-                'write_only': True,
-                'style': {
-                    'input_type': 'password'
-                }
-            },
-            'email': {
-                'required': True,
-                'allow_blank': False,
-            }
+            "password": {"write_only": True, "style": {"input_type": "password"}},
+            "email": {"required": True, "allow_blank": False,},
         }
 
-    def validate_email(self, email):
-        email = get_adapter().clean_email(email)
-        if allauth_settings.UNIQUE_EMAIL:
-            if email and email_address_exists(email):
-                raise serializers.ValidationError(
-                    _("A user is already registered with this e-mail address."))
-        return email
 
     def create(self, validated_data):
         """Performs the creation of a User during the Signup process."""
@@ -92,3 +81,10 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['id', 'email', 'name']
+
+
+
+class AccommodationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Accommodation
+        fields = "__all__"

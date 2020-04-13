@@ -2,6 +2,7 @@ from django.contrib.auth.models import (
     AbstractUser,
     BaseUserManager,
 )
+from django.conf import settings
 from django.db import models
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
@@ -53,6 +54,7 @@ class User(AbstractUser):
                 self.Meta.verbose_name
             ])
         return super(User, self).save(*args, **kwargs)
+
 
     def get_absolute_url(self):
         return reverse("users:detail", kwargs={"username": self.username})

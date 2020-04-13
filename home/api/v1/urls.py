@@ -2,6 +2,7 @@ from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 
 from home.api.v1.viewsets import (
+    AccommodationViewSet,
     CreateUserView,
     SignupViewSet,
     LoginViewSet,
@@ -14,6 +15,9 @@ router = DefaultRouter()
 router.register('login', LoginViewSet, basename='login')
 # router.register('customtext', CustomTextViewSet)
 # router.register('homepage', HomePageViewSet)
+router.register("accommodation", AccommodationViewSet)
+
+
 
 urlpatterns = [
     path('', include('djoser.urls')),
