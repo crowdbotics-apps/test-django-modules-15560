@@ -173,13 +173,27 @@ EMAIL_HOST_PASSWORD = env.str("SENDGRID_PASSWORD", "")
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
+
+# `djoser` app is used for API User registration and authentication.
 DJOSER = {
     'LOGIN_FIELD': ACCOUNT_AUTHENTICATION_METHOD,
+    'SEND_ACTIVATION_EMAIL': True,
+    'SEND_CONFRIMATION_EMAIL': True,
+    'PASSWORD_RESET_CONFIRM_URL': '#/password/reset/confirm/{uid}/{token}',
+    'USERNAME_RESET_CONFIRM_URL': '#/username/reset/confirm/{uid}/{token}',
+    'ACTIVATION_URL': "#/activate/{uid}/{token}",
     'SERIALIZERS': {
          'user_create': 'home.api.v1.serializers.CreateUserSerializer',
     }
 }
 
+
 if DEBUG:
     # output email to console instead of sending
     EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
+
+try:
+    from .local_settings import *
+except ImportError:
+    pass

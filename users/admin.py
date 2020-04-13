@@ -18,5 +18,7 @@ class UserAdmin(auth_admin.UserAdmin):
                         'business_name')
         }),
     ) + auth_admin.UserAdmin.fieldsets
-    list_display = ["username", "name", "is_superuser", 'user_type']
+    list_display = [
+        'email', "is_superuser", 'user_type', 
+    ]
     search_fields = ["name"]

@@ -4,3 +4,4 @@ env/
 .env
 staticfiles/
 *.sqlite3
+local_settings.py
