@@ -1,17 +1,12 @@
 from rest_framework import viewsets
 from rest_framework import authentication
-from .serializers import (
-    AccommodationSerializer,
-    CustomTextSerializer,
-    HomePageSerializer,
-)
 import json
 
 from django import apps
 from django.core.management import call_command
 from .permissions import CrowboticsExclusive
 
-from rest_framework import status
+from rest_framework import generics, status
 from rest_framework.authentication import SessionAuthentication, TokenAuthentication
 from rest_framework.authtoken.serializers import AuthTokenSerializer
 from rest_framework.permissions import IsAdminUser
@@ -21,17 +16,29 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from home.api.v1.serializers import (
-    SignupSerializer,
-    CustomTextSerializer,
-    HomePageSerializer,
+    AccommodationSerializer,
+    CreateUserSerializer,
+    # CustomTextSerializer,
+    # HomePageSerializer,
     UserSerializer,
 )
-from home.models import Accommodation, CustomText, HomePage
+from home.models import (
+    Accommodation,
+    CustomText,
+    HomePage,
+)
 
 
-class SignupViewSet(ModelViewSet):
-    serializer_class = SignupSerializer
-    http_method_names = ["post"]
+class CreateUserView(generics.CreateAPIView):
+    """
+    View for creating a new user.  Users can either be `Customer` or `Vendor`.
+    """
+    serializer_class = CreateUserSerializer
+
+
+class VerifyVendorView(generics.CreateAPIView):
+    """Create a new user in the system"""
+    serializer_class = CreateUserSerializer
 
 
 class LoginViewSet(ViewSet):
@@ -50,20 +57,20 @@ class LoginViewSet(ViewSet):
         return Response({"token": token.key, "user": user_serializer.data})
 
 
-class CustomTextViewSet(ModelViewSet):
-    serializer_class = CustomTextSerializer
-    queryset = CustomText.objects.all()
-    authentication_classes = (SessionAuthentication, TokenAuthentication)
-    permission_classes = [IsAdminUser]
-    http_method_names = ["get", "put", "patch"]
-
-
-class HomePageViewSet(ModelViewSet):
-    serializer_class = HomePageSerializer
-    queryset = HomePage.objects.all()
-    authentication_classes = (SessionAuthentication, TokenAuthentication)
-    permission_classes = [IsAdminUser]
-    http_method_names = ["get", "put", "patch"]
+# class CustomTextViewSet(ModelViewSet):
+#     serializer_class = CustomTextSerializer
+#     queryset = CustomText.objects.all()
+#     authentication_classes = (SessionAuthentication, TokenAuthentication)
+#     permission_classes = [IsAdminUser]
+#     http_method_names = ['get', 'put', 'patch']
+#
+#
+# class HomePageViewSet(ModelViewSet):
+#     serializer_class = HomePageSerializer
+#     queryset = HomePage.objects.all()
+#     authentication_classes = (SessionAuthentication, TokenAuthentication)
+#     permission_classes = [IsAdminUser]
+#     http_method_names = ['get', 'put', 'patch']
 
 
 class AppReportView(APIView):
