@@ -11,7 +11,7 @@ from home.api.v1.viewsets import (
 )
 
 router = DefaultRouter()
-router.register('login', LoginViewSet, basename='login')
+# router.register('login', LoginViewSet, basename='login')
 # router.register('customtext', CustomTextViewSet)
 # router.register('homepage', HomePageViewSet)
 router.register("accommodation", AccommodationViewSet)
@@ -19,9 +19,6 @@ router.register("accommodation", AccommodationViewSet)
 
 urlpatterns = [
     path("", include(router.urls)),
-
-    path('auth/', include("djoser.urls.base")),
-    path('auth/', include("djoser.urls.authtoken")),
     # path('auth/signup', CreateUserView.as_view(), name='signup'),
 
     path("report", AppReportView.as_view(), name="app_report"),

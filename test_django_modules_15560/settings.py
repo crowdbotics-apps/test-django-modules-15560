@@ -61,6 +61,7 @@ THIRD_PARTY_APPS = [
     'django_extensions',
     'djoser',
     'drf_yasg',
+    'rest_framework_simplejwt',
 ]
 INSTALLED_APPS += LOCAL_APPS + THIRD_PARTY_APPS
 
@@ -177,6 +178,7 @@ EMAIL_USE_TLS = True
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
 }
 
@@ -191,6 +193,12 @@ DJOSER = {
     'SERIALIZERS': {
          'user_create': 'home.api.v1.serializers.CreateUserSerializer',
     }
+}
+
+
+# JSON Web Token
+SIMPLE_JWT = {
+    'AUTH_HEADER_TYPES': ('JWT',),
 }
 
 
